@@ -1102,6 +1102,27 @@ else()
       NAME draco_unity_enc_plugin
       TYPE OBJECT
       SOURCES ${draco_unity_enc_plug_sources}
+      
+      # Fix for encoder in wasm
+      SOURCES ${draco_attributes_sources}
+      SOURCES ${draco_compression_attributes_enc_sources}
+      SOURCES ${draco_compression_attributes_pred_schemes_enc_sources}
+      SOURCES ${draco_compression_bit_coders_sources}
+      SOURCES ${draco_compression_encode_sources}
+      SOURCES ${draco_compression_entropy_sources}
+      SOURCES ${draco_compression_mesh_traverser_sources}
+      SOURCES ${draco_compression_mesh_enc_sources}
+      SOURCES ${draco_compression_options_sources}
+      SOURCES ${draco_compression_point_cloud_enc_sources}
+      SOURCES ${draco_core_sources}
+      SOURCES ${draco_enc_config_sources}
+      SOURCES ${draco_mesh_sources}
+      SOURCES ${draco_metadata_enc_sources}
+      SOURCES ${draco_metadata_sources}
+      SOURCES ${draco_point_cloud_sources}
+      SOURCES ${draco_points_enc_sources}
+      #
+
       DEFINES ${draco_defines}
       INCLUDES ${draco_include_paths})
 
