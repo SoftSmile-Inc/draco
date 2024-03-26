@@ -381,6 +381,30 @@ jobs:
       run: cmake --build build_web --target dracodec_unity -j
     - name: build_webassembly_dracoenc_unity
       run: cmake --build build_web --target dracoenc_unity -j
+    # Artifacts
+    - name: package
+      run: |
+        mkdir -p draco_emscripten_3/WebGL/2022
+        mv build_web/libdracodec_unity.a draco_emscripten_3/WebGL/2022
+        mv build_web/libdracoenc_unity.a draco_emscripten_3/WebGL/2022
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: draco_emscripten_3
+        path: draco_emscripten_3
+
+  linux_emscripten_4:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup cache
+      id: cache-system-libraries
+      uses: actions/cache@v3
+      with:
+        path: ${{env.EM_3_CACHE_FOLDER}}
+        key: ${{env.EM_3_VERSION}}-${{ runner.os }}
 
     # Emscripten 4
     - name: setup Emscripten
@@ -400,18 +424,17 @@ jobs:
       run: cmake --build build_web --target dracodec_unity -j
     - name: build_webassembly_dracoenc_unity
       run: cmake --build build_web --target dracoenc_unity -j
-
     # Artifacts
     - name: package
       run: |
-        mkdir -p draco_emscripten_3/WebGL/2022
-        mv build_web/libdracodec_unity.a draco_emscripten_3/WebGL/2022
-        mv build_web/libdracoenc_unity.a draco_emscripten_3/WebGL/2022
+        mkdir -p draco_emscripten_4/WebGL/2022
+        mv build_web/libdracodec_unity.a draco_emscripten_4/WebGL/2023
+        mv build_web/libdracoenc_unity.a draco_emscripten_4/WebGL/2023
     - name: upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: draco_emscripten_3
-        path: draco_emscripten_3
+        name: draco_emscripten_4
+        path: draco_emscripten_4
 
 
   linux_legacy:
