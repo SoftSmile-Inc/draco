@@ -17,6 +17,9 @@ on:
   workflow_dispatch:
 
 env:
+  # Emscripten version for Unity 2023 or newer
+  EM_4_VERSION: 3.1.39
+  EM_4_CACHE_FOLDER: 'emsdk-3-1-39-cache'
   # Emscripten version for Unity 2022.2 or newer
   EM_3_VERSION: 3.1.8
   EM_3_CACHE_FOLDER: 'emsdk-3-cache'
@@ -366,6 +369,25 @@ jobs:
       with:
         version: ${{env.EM_3_VERSION}}
         actions-cache-folder: ${{env.EM_3_CACHE_FOLDER}}
+    - name: configure WebAssembly
+      run: >
+        EMSCRIPTEN="$EMSDK/upstream/emscripten" emcmake cmake -B build_web
+        -DCMAKE_BUILD_TYPE=MinSizeRel
+        -DDRACO_JS_GLUE=OFF
+        -DDRACO_UNITY_PLUGIN=ON
+        -DDRACO_GLTF=ON
+        -DDRACO_BACKWARDS_COMPATIBILITY=OFF
+    - name: build_webassembly_dracodec_unity
+      run: cmake --build build_web --target dracodec_unity -j
+    - name: build_webassembly_dracoenc_unity
+      run: cmake --build build_web --target dracoenc_unity -j
+
+    # Emscripten 4
+    - name: setup Emscripten
+      uses: mymindstorm/setup-emsdk@v12
+      with:
+        version: ${{env.EM_4_VERSION}}
+        actions-cache-folder: ${{env.EM_4_CACHE_FOLDER}}
     - name: configure WebAssembly
       run: >
         EMSCRIPTEN="$EMSDK/upstream/emscripten" emcmake cmake -B build_web
