@@ -427,7 +427,7 @@ jobs:
     # Artifacts
     - name: package
       run: |
-        mkdir -p draco_emscripten_4/WebGL/2022
+        mkdir -p draco_emscripten_4/WebGL/2023
         mv build_web/libdracodec_unity.a draco_emscripten_4/WebGL/2023
         mv build_web/libdracoenc_unity.a draco_emscripten_4/WebGL/2023
     - name: upload artifact
